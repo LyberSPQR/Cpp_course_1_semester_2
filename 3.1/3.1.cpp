@@ -6,7 +6,7 @@ using namespace std;
 
 int create(char* s, int n);   // создание исходного файла чисел
 int read_file(char* s);     // вывод на экран 
-int create_file(char* s1, char* s, int n); // создание файла из файла исходного
+int create_file(char* s1, char* s); // создание файла из файла исходного
 int main()
 {
     unsigned int n;
@@ -28,13 +28,14 @@ int main()
         return 1;
     // имя нового файла для записи
     char s1[40] = "file1.txt";
-    error = create_file(s1, s, n);  // создание  файла
+    error = create_file(s1, s);  // создание  файла
     if (error != 0)
         return 1;
     cout << "Numbers in file2" << endl;
     error = read_file(s1);              // вывод на экран 
     if (error != 0)
         return 1;
+
     return 0;
 }
 
@@ -73,6 +74,7 @@ int  read_file(char* s)
     infile >> v;
     while (!infile.eof())
     {
+
         cout << v << " ";
         infile >> v;   // чтение чисел из файла   
     }
@@ -83,8 +85,21 @@ int  read_file(char* s)
 }
 
 // создание  файла 
-int create_file(char* s1, char* s, int n)
+int create_file(char* s1, char* s)
 {
+    ifstream infile(s); // открываем файл для чтения
+    unsigned long size = 0, h;
+
+    while (!infile.eof())
+    {
+        infile >> h;
+        size++;
+    }
+
+    infile.close();
+    /*size -= 1;
+    cout << "size= " << size;*/
+
     ofstream outfile(s1);   // открываем файл для записи
     if (!outfile)
     {
@@ -99,9 +114,9 @@ int create_file(char* s1, char* s, int n)
     infileChet >> v;
     infileNeChet >> g;
 
-    while (cntElements != n)
+    while (cntElements != size)
     {
-        while (countofNeChet != n / 2 && cntNeChet != 1)
+        while (countofNeChet != size / 2 && cntNeChet != 1)
         {
             if (g % 2 != 0)
             {
@@ -113,7 +128,7 @@ int create_file(char* s1, char* s, int n)
             infileNeChet >> g;
         }
 
-        while (countofChet != n / 2 && cntChet != 1)
+        while (countofChet != size / 2 && cntChet != 1)
         {
             if (v % 2 == 0)
             {
