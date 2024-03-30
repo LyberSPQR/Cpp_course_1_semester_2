@@ -80,6 +80,7 @@ int  read_file(char* s)
     }
     cout << endl;
 
+    infile.clear();
     infile.close();
     return 0;
 }
@@ -95,10 +96,10 @@ int create_file(char* s1, char* s)
         infile >> h;
         size++;
     }
-
+    size -= 1;
     infile.close();
-    /*size -= 1;
-    cout << "size= " << size;*/
+
+    cout << "Size = " << size << endl;
 
     ofstream outfile(s1);   // открываем файл для записи
     if (!outfile)
