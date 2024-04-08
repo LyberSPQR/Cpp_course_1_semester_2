@@ -20,7 +20,7 @@ void findingNumber(string& str)
 	{
 		int r = m % 2;
 		m = m / 2;
-		str[i] = char('0' + r);
+		str.at(i) = char('0' + r);
 		i++;
 	} while (m > 0);
 
@@ -31,7 +31,7 @@ void findingNumber(string& str)
 	int sizik = i;
 	for (int i = sizik; i >= 0; i--)
 	{
-		if (str[i] == '1')
+		if (str.at(i) == '1')
 		{
 			dec += v;
 		}

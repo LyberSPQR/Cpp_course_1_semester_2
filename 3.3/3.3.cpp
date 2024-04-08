@@ -7,30 +7,25 @@
 using namespace std;
 struct Students
 {
-	char fio[40];
+	char fio[6] = "";
 	unsigned int age;
 	unsigned int course;
 	unsigned int gender;
 	double grade;
 };
 
-int main()
+void creatingDatabase(Students& student,int cntStudents)
 {
-	setlocale(LC_ALL, "ru");
-	Students student;
 	ofstream fout("data_base.bin", ios::binary);
-	int cntStudents, course, counter = 0;
-	cout << "Enter count of students: " << endl;
-	cin >> cntStudents;
 	for (int i = 0; i < cntStudents; i++)
 	{
-		strcpy(student.fio, "Зубенко_Михаил_Петрович");
+		strcpy(student.fio, "Вася");
 		student.age = rand() % 4 + 18;
 		student.course = rand() % 3 + 1;
 		student.gender = rand() % 2 + 1;
 		student.grade = rand() % 3 + 7;
 
-		fout << student.fio << " " << student.age << " " << student.course << " " << student.gender << " " << student.grade << endl;
+		fout.write(reinterpret_cast<const char*>(&student),sizeof(Students));
 
 		cout << "ФИО: " << student.fio << endl;
 		cout << "Возраст: " << student.age << endl;
@@ -39,16 +34,32 @@ int main()
 		cout << "Успеваемость: " << student.grade << endl << endl << endl << endl;
 	}
 	fout.close();
+}
 
+void findingCntOfGoodStudents(Students& student, int cntStudents)
+{
+	int course, counter = 0;
 	cout << "Enter course to search: " << endl;
 	cin >> course;
 	ifstream fin("data_base.bin", ios::binary);
 	for (int i = 0; i < cntStudents; i++)
 	{
-		fin >> student.fio >> student.age >> student.course >> student.gender >> student.grade;
+		fin.read(reinterpret_cast<char*>(&student), sizeof(Students));
 		if (student.course == course && student.grade >= 8)
 			counter++;
 	}
 	cout << "Count of good students: " << counter;
 	fin.close();
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	Students student;
+	int cntStudents;
+	cout << "Enter count of students: " << endl;
+	cin >> cntStudents;
+	creatingDatabase(student, cntStudents);
+	findingCntOfGoodStudents(student, cntStudents);
+	return 0;
 }

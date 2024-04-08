@@ -25,22 +25,22 @@ int main()
 
 void findingElements(string string0, string string1)
 {
-    int k = 0, lenght = size(string0), j = 0;
+    int k = 0, pos= 0,lenght = size(string0), j = 0;
     cout << lenght << endl;
     cout << "String: " << string0 << endl;
     for (int i = 0; i < lenght; i++)
     {
-        if (string0[i] == '*')
+        if (string0.at(i) == '*')
         {
-            k = i;
+            k = string0.find('*', pos = 0);;
             i++;
             cout << "Elements: ";
-            for (; string0[i] != '*'; i++)
+            for (; string0.at(i) != '*'; i++)
             {
                 if (j < lenght - k && i < lenght)
                 {
-                    string1[j] = string0[i];
-                    cout << string1[j] << " ";
+                    string1.at(j) = string0.at(i);
+                    cout << string1.at(j) << " ";
                     j++;
                 }
                 else {
@@ -56,13 +56,13 @@ void findingString2(string& string0, string& string2, int lenght)
     int j = 0;
     for (int i = 0; i < lenght; i++)
     {
-        if ('a' <= string0[i] && string0[i] <= 'z'
-            || 'A' <= string0[i] && string0[i] <= 'Z')
+        if ('a' <= string0.at(i) && string0.at(i) <= 'z'
+            || 'A' <= string0.at(i) && string0.at(i) <= 'Z')
         {
-            string2[j] = string0[i];
+            string2.at(j) = string0.at(i);
             j++;
         }
-        string2[j] = '\0';
+        string2.at(j) = '\0';
     }
 
     cout << endl;
@@ -72,11 +72,10 @@ void findingString2(string& string0, string& string2, int lenght)
     {
         for (int j = size(string2) - 1; j > i; j--)
         {
-            if (string2[j - 1] > string2[j])
+            if (string2.at(j - 1) > string2.at(j))
             {
-                int b = string2[j - 1];
-                string2[j - 1] = string2[j];
-                string2[j] = b;
+                swap(string2.at(j - 1), string2.at(j));
+               
             }
         }
     }
@@ -90,14 +89,14 @@ void findingLettersAlphabetOrder(string& string2)
     {
         for (int i = 0; i < size(string2); i++)
         {
-            if (string2[j] == string2[i])
+            if (string2.at(j) == string2.at(i))
             {
                 counter++;
             }
         }
         if (counter == 1)
         {
-            cout << string2[j] << " ";
+            cout << string2.at(j) << " ";
 
         }
         counter = 0;

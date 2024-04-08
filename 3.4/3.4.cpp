@@ -1,4 +1,6 @@
 ﻿// 3.4.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
@@ -12,14 +14,9 @@ struct Students
 	double grade;
 };
 
-int main()
+void creatingDatabase(Students& student, int cntStudents)
 {
-	setlocale(LC_ALL, "ru");
-	Students student;
 	ofstream fout("data_base.txt");
-	int cntStudents, course, counter = 0;
-	cout << "Enter count of students: " << endl;
-	cin >> cntStudents;
 	for (int i = 0; i < cntStudents; i++)
 	{
 		strcpy(student.fio, "Зубенко_Михаил_Петрович");
@@ -37,7 +34,11 @@ int main()
 		cout << "Успеваемость: " << student.grade << endl << endl << endl << endl;
 	}
 	fout.close();
+}
 
+void findingCntOfGoodStudents(Students& student, int cntStudents)
+{
+	int course, counter = 0;
 	cout << "Enter course to search: " << endl;
 	cin >> course;
 	ifstream fin("data_base.txt");
@@ -49,4 +50,16 @@ int main()
 	}
 	cout << "Count of good students: " << counter;
 	fin.close();
+}
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	Students student;
+	int cntStudents;
+	cout << "Enter count of students: " << endl;
+	cin >> cntStudents;
+	creatingDatabase(student, cntStudents);
+	findingCntOfGoodStudents(student, cntStudents);
+	return 0;
 }
