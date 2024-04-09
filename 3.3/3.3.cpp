@@ -4,17 +4,32 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <fstream>
+#include <string.h>
 using namespace std;
 struct Students
 {
-	char fio[6] = "";
+	char fio[10] = "";
 	unsigned int age;
 	unsigned int course;
 	unsigned int gender;
 	double grade;
 };
 
-void creatingDatabase(Students& student,int cntStudents)
+void creatingDatabase(Students& student, int cntStudents);
+void findingCntOfGoodStudents(Students& student, int cntStudents);
+
+int main()
+{
+	setlocale(LC_ALL, "ru");
+	Students student;
+	int cntStudents;
+	cout << "Enter count of students: " << endl;
+	cin >> cntStudents;
+	creatingDatabase(student, cntStudents);
+	findingCntOfGoodStudents(student, cntStudents);
+	return 0;
+}
+void creatingDatabase(Students& student, int cntStudents)
 {
 	ofstream fout("data_base.bin", ios::binary);
 	for (int i = 0; i < cntStudents; i++)
@@ -25,7 +40,7 @@ void creatingDatabase(Students& student,int cntStudents)
 		student.gender = rand() % 2 + 1;
 		student.grade = rand() % 3 + 7;
 
-		fout.write(reinterpret_cast<const char*>(&student),sizeof(Students));
+		fout.write(reinterpret_cast<const char*>(&student), sizeof(Students));
 
 		cout << "ФИО: " << student.fio << endl;
 		cout << "Возраст: " << student.age << endl;
@@ -50,16 +65,4 @@ void findingCntOfGoodStudents(Students& student, int cntStudents)
 	}
 	cout << "Count of good students: " << counter;
 	fin.close();
-}
-
-int main()
-{
-	setlocale(LC_ALL, "ru");
-	Students student;
-	int cntStudents;
-	cout << "Enter count of students: " << endl;
-	cin >> cntStudents;
-	creatingDatabase(student, cntStudents);
-	findingCntOfGoodStudents(student, cntStudents);
-	return 0;
 }
